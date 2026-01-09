@@ -3,173 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select the Year</title>
+    <title>Final Year Resources | Mechanical Hub</title>
     <style>
+        :root {
+            --primary-bg: #1a1d23;
+            --secondary-bg: #282c34;
+            --accent-color: #61dafb;
+            --text-main: #ffffff;
+            --text-dim: #abb2bf;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-            padding: 20px;
         }
+
         h1, h2 {
-            font-size: 2em;
+            font-size: 2rem;
             text-align: center;
-            color: gray;
-            margin: 20px 0;
-            font-weight: bold;
-            animation: fadeIn 2s ease-in;
+            color: var(--accent-color);
+            margin: 30px 0 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeIn 1.5s ease-in;
         }
+
         .container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
             width: 100%;
-            max-width: 600px;
-            margin: 20px 0;
+            max-width: 850px;
+            margin-bottom: 40px;
         }
-        .dropdown {
-            position: relative;
-            display: inline-block;
+
+        /* --- Subject Accordion (Fixes Overlapping) --- */
+        .subject-card {
+            background-color: var(--secondary-bg);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.2s;
         }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            min-width: 160px;
+
+        .subject-card:hover {
+            border-color: var(--accent-color);
         }
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
+
+        .subject-btn {
+            width: 100%;
+            padding: 22px;
+            background: none;
+            border: none;
+            color: var(--text-main);
             text-align: left;
-        }
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-        .dropdown-button {
-            padding: 15px 30px;
-            text-decoration: none;
-            color: white;
-            background-color: #007BFF;
-            border-radius: 8px;
-            text-align: center;
-            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-            font-size: 1em;
-            animation: slideIn 1s ease-in;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .dropdown-button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-            box-shadow: 0px 4px 15px rgba(0, 123, 255, 0.4);
+
+        .subject-btn::after {
+            content: '▼';
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            transition: 0.3s;
         }
-        @media (min-width: 600px) {
-            .container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            h1, h2 {
-                font-size: 2.5em;
-            }
-            .dropdown-button {
-                font-size: 1.25em;
-                padding: 20px 40px;
-            }
+
+        .subject-card.active .subject-btn::after {
+            transform: rotate(180deg);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+
+        /* --- Links Container --- */
+        .subject-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+            background: rgba(0, 0, 0, 0.15);
         }
-        @keyframes slideIn {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+
+        .subject-card.active .subject-content {
+            max-height: 1000px; /* Expands to fit all links */
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .subject-content a {
+            display: block;
+            padding: 15px 25px;
+            color: var(--text-dim);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .subject-content a:hover {
+            background-color: rgba(97, 218, 251, 0.1);
+            color: var(--accent-color);
+            padding-left: 35px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        @media (max-width: 600px) {
+            h1, h2 { font-size: 1.6rem; }
+            .subject-btn { font-size: 1rem; padding: 18px; }
         }
     </style>
 </head>
 <body>
-    <h1>7TH SEMESTER</h1>
+
+    <h1>7th Semester Resources</h1>
     <div class="container">
-        <div class="dropdown">
-            <div class="dropdown-button">AM</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem7/AM/AM (SEM).pdf" download>AM NOTES</a>
-                <a href="pdf/sem7/AM/AM NOTES.pdf" download>NOTES</a>
-                <a href="pdf/sem7/AM/Mikell P. Groover - Automation, Production Systems, and Computer-Integrated Manufacturing 4th Edition (2015, Pearson_ 4 edition) - libgen.li.pdf" download>TEX BOOK</a>
+        
+        <div class="subject-card">
+            <button class="subject-btn" onclick="toggleAccordion(this)">AM (Automation & Mfg)</button>
+            <div class="subject-content">
+                <a href="pdf/sem7/AM/AM (SEM).pdf" download>AM Semester Notes</a>
+                <a href="pdf/sem7/AM/AM NOTES.pdf" download>Handwritten Notes</a>
+                <a href="pdf/sem7/AM/Mikell P. Groover - CIM 4th Ed.pdf" download>Groover Textbook (CIM)</a>
                 <a href="pdf/CLICK HERE .pptx" download>Follow Me</a>
             </div>
         </div>
-        <div class="dropdown">
-            <div class="dropdown-button">CAD/CAM</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem7/CAD&CAM/CAD CAM NOTES.pdf" download>CAD&CAM</a>
+
+        <div class="subject-card">
+            <button class="subject-btn" onclick="toggleAccordion(this)">CAD / CAM</button>
+            <div class="subject-content">
+                <a href="pdf/sem7/CAD&CAM/CAD CAM NOTES.pdf" download>CAD & CAM Notes</a>
                 <a href="pdf/CLICK HERE .pptx" download>Follow Me</a>
             </div>
         </div>
-        <div class="dropdown">
-            <div class="dropdown-button">Automation in Manufacturing</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem7/EIA/EIA CLASS NOTES.pdf" download>CLASS NOTES</a>
+
+        <div class="subject-card">
+            <button class="subject-btn" onclick="toggleAccordion(this)">Industrial Engg & Management</button>
+            <div class="subject-content">
+                <a href="pdf/sem7/IM/IM NOTES.pdf" download>IM Notes</a>
+                <a href="pdf/sem7/IM/IME MODEL PAPERS.docx" download>Model Papers</a>
+                <a href="pdf/sem7/IM/toaz.info-industrial-engg-opkhanna.pdf" download>O.P. Khanna Textbook</a>
                 <a href="pdf/CLICK HERE .pptx" download>Follow Me</a>
             </div>
         </div>
-        <div class="dropdown">
-            <div class="dropdown-button">Industrial Engineering and Management</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem7/FEM/FEM NOTES.pdf" download>NOTS</a>
-                <a href="pdf/sem7/FEM/FINITE ELEMENT METHODS.docx" download>TEXT BOOK</a>
-                <a href="pdf/CLICK HERE .pptx" download>Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <div class="dropdown-button">Environmental Impact Assessment</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem7/IM/IEM mid2.pdf" download>MID-2</a>
-                <a href="pdf/sem7/IM/IM NOTES.pdf" download>IM NOTES</a>
-                <a href="pdf/sem7/IM/IME MODEL PAPERS.docx" download>MODEL PAPERS</a>
-                <a href="pdf/sem7/IM/toaz.info-industrial-engg-amp-mgmnt-opkhanna-pr_6f117f79d5573c9666f9b30f7f381c7a.pdf" download>TEXT BOOK</a>
-                <a href="pdf/CLICK HERE .pptx" download>Follow Me</a>
-            </div>
-        </div>
+
     </div>
-    <h2>8TH SEMESTER (final)</h2>
+
+    <h2>8th Semester (Final)</h2>
     <div class="container">
-        <div class="dropdown">
-            <div class="dropdown-button">Flexible Manufacturing System</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem8/fms/Flexible Mnfg System-HK Shivanand.pdf" download>Flexible Mnfg System-HK</a>
-                <a href="pdf/sem8/fms/FMS  MODEL PAPERS  IV-II MECH (1).docx" download>MODEL PAPERS</a>
-                <a href="pdf/sem8/fms/Nand K. Jha (Eds.) - Handbook of Flexible Manufacturing Systems (1991, Elsevier Science) - libgen.li.pdf" download> Handbook</a>
+        
+        <div class="subject-card">
+            <button class="subject-btn" onclick="toggleAccordion(this)">Flexible Manufacturing System</button>
+            <div class="subject-content">
+                <a href="pdf/sem8/fms/Flexible Mnfg System-HK Shivanand.pdf" download>FMS - HK Shivanand</a>
+                <a href="pdf/sem8/fms/FMS MODEL PAPERS IV-II.docx" download>Model Question Papers</a>
                 <a href="pdf/CLICK HERE .pptx" download>Follow Me</a>
             </div>
         </div>
-        <div class="dropdown">
-            <div class="dropdown-button">Renewable Energy Sources</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem8/res/2nd unit.pdf" download>RES Unit-2</a>
-                <a href="pdf/sem8/res/4th unit.pdf" download>RES Unit-4</a>
-                <a href="pdf/sem8/res/5th unit.pdf" download>RES Unit-5</a>
-                <a href="pdf/sem8/res/Nand K. Jha (Eds.) - Handbook of Flexible Manufacturing Systems (1991, Elsevier Science) - libgen.li.pdf" download>Handbook</a>
-                <a href="pdf/sem8/res/RES IMPORTANT.pdf" download>Imp</a>
-                <a href="pdf/sem8/res/RES-MATERIAL  FOR 4TH YEAR.pdf" download>Material</a>
+
+        <div class="subject-card">
+            <button class="subject-btn" onclick="toggleAccordion(this)">Renewable Energy Sources</button>
+            <div class="subject-content">
+                <a href="pdf/sem8/res/RES-MATERIAL FOR 4TH YEAR.pdf" download>Full Study Material</a>
+                <a href="pdf/sem8/res/2nd unit.pdf" download>Unit 2 Notes</a>
+                <a href="pdf/sem8/res/4th unit.pdf" download>Unit 4 Notes</a>
+                <a href="pdf/sem8/res/RES IMPORTANT.pdf" download>Important Questions</a>
                 <a href="pdf/CLICK HERE .pptx" download>Follow Me</a>
             </div>
         </div>
+
     </div>
+
+    <script>
+        function toggleAccordion(button) {
+            const currentCard = button.parentElement;
+            
+            // Close other cards in the same section for clarity
+            const container = currentCard.parentElement;
+            container.querySelectorAll('.subject-card').forEach(card => {
+                if (card !== currentCard) {
+                    card.classList.remove('active');
+                }
+            });
+
+            // Toggle current subject
+            currentCard.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>

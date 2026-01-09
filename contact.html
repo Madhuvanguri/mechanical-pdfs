@@ -1,263 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>Advanced Feedback Form</title>
+    <title>Mechanical Hub - Feedback</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        :root {
+            --primary-bg: #1a1d23;
+            --secondary-bg: #282c34;
+            --accent-color: #61dafb;
+            --text-main: #ffffff;
+            --text-dim: #abb2bf;
+            --danger: #ff6b6b;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        .feedback-form,
-        .comments-section {
-            max-width: 600px;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-
-        .feedback-form div {
-            margin-bottom: 10px;
-        }
-
-        .feedback-form label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .feedback-form input,
-        .feedback-form textarea {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-
-        .feedback-form button {
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        .feedback-form button:hover {
-            background-color: #0056b3;
-        }
-
-        .comment {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 10px;
-            position: relative;
-        }
-
-        .comment h3 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
             margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .comment p {
-            margin: 5px 0 10px 0;
-        }
+        h1, h2 { color: var(--accent-color); text-align: center; }
 
-        .comment .timestamp {
-            font-size: 0.8em;
-            color: #777;
-        }
-
-        .comment .reply-button,
-        .comment .delete-button {
-            background-color: transparent;
-            border: none;
-            color: #007BFF;
-            cursor: pointer;
-            position: absolute;
-            top: 10px;
-        }
-
-        .comment .reply-button {
-            right: 50px;
-        }
-
-        .comment .delete-button {
-            right: 10px;
-        }
-
-        .comment .reply-button:hover,
-        .comment .delete-button:hover {
-            text-decoration: underline;
-        }
-
-        .reply-form {
-            display: none;
-            margin-top: 10px;
-        }
-
-        .reply-form textarea {
+        .feedback-form, .comments-section {
+            background: var(--secondary-bg);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            max-width: 700px;
             width: 100%;
-            padding: 8px;
+            margin-bottom: 30px;
             box-sizing: border-box;
         }
 
-        .reply-form button {
-            padding: 5px 10px;
-            background-color: #007BFF;
+        /* --- Input Styling --- */
+        .feedback-form div { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text-dim); }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            background: #1a1d23;
+            border: 1px solid #3e4451;
+            border-radius: 8px;
             color: white;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+
+        /* --- Star Rating --- */
+        .rating { display: flex; gap: 10px; margin-bottom: 15px; flex-direction: row-reverse; justify-content: flex-end;}
+        .rating input { display: none; }
+        .rating label { cursor: pointer; font-size: 25px; color: #4b5263; transition: 0.2s; }
+        .rating input:checked ~ label, .rating label:hover, .rating label:hover ~ label { color: #f1c40f; }
+
+        button {
+            padding: 12px 24px;
+            background-color: var(--accent-color);
+            color: #20232a;
             border: none;
+            border-radius: 8px;
+            font-weight: bold;
             cursor: pointer;
-            margin-top: 5px;
+            transition: 0.3s;
         }
 
-        .reply-form button:hover {
-            background-color: #0056b3;
+        button:hover { background-color: white; transform: scale(1.02); }
+
+        /* --- Comment Styling --- */
+        .comment {
+            border-left: 3px solid var(--accent-color);
+            background: rgba(255,255,255,0.03);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 10px 10px 0;
+            position: relative;
+            animation: fadeIn 0.5s ease;
         }
 
-        .reply {
-            margin-left: 20px;
+        @keyframes fadeIn { from {opacity: 0; transform: translateY(10px);} to {opacity: 1; transform: translateY(0);} }
+
+        .comment h3 { margin: 0; font-size: 1.1rem; color: var(--accent-color); }
+        .comment p { margin: 10px 0; color: var(--text-main); }
+        .comment .timestamp { font-size: 0.75rem; color: var(--text-dim); }
+
+        .comment-actions { display: flex; gap: 15px; margin-top: 10px; }
+        .action-btn { background: none; color: var(--accent-color); padding: 0; font-size: 0.85rem; font-weight: normal; }
+        .delete-btn { color: var(--danger); }
+
+        .reply-container { margin-left: 30px; margin-top: 10px; border-left: 1px dashed #4b5263; padding-left: 15px; }
+
+        .reply-form { display: none; margin-top: 10px; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .feedback-form, .comments-section { padding: 15px; }
         }
     </style>
 </head>
 
 <body>
-    <h1>Feedback Form</h1>
+    <h1>Feedback Portal</h1>
 
     <div class="feedback-form">
         <div>
-            <label for="name">Name</label>
-            <input type="text" id="name" required>
+            <label for="name">Your Name</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
         </div>
+        
+        <label>Rating</label>
+        <div class="rating">
+            <input type="radio" name="star" id="star5" value="5"><label for="star5">★</label>
+            <input type="radio" name="star" id="star4" value="4"><label for="star4">★</label>
+            <input type="radio" name="star" id="star3" value="3"><label for="star3">★</label>
+            <input type="radio" name="star" id="star2" value="2"><label for="star2">★</label>
+            <input type="radio" name="star" id="star1" value="1"><label for="star1">★</label>
+        </div>
+
         <div>
-            <label for="comment">Comment</label>
-            <textarea id="comment" rows="5" required></textarea>
+            <label for="comment">Your Suggestion / Feedback</label>
+            <textarea id="comment" rows="4" placeholder="How can we improve the mechanical resources?"></textarea>
         </div>
-        <button onclick="submitComment()">Submit</button>
+        <button onclick="submitComment()">Post Feedback</button>
     </div>
 
-    <h2>Comments</h2>
+    <h2>Community Discussion</h2>
     <div class="comments-section" id="comments-section">
-        <!-- Comments will be added here -->
-    </div>
+        </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", loadComments);
 
         function submitComment() {
-            var name = document.getElementById('name').value;
-            var comment = document.getElementById('comment').value;
+            const name = document.getElementById('name').value;
+            const comment = document.getElementById('comment').value;
+            const rating = document.querySelector('input[name="star"]:checked')?.value || "None";
 
-            if (name && comment) {
-                var commentData = { id: Date.now(), name: name, comment: comment, timestamp: new Date().toLocaleString() };
+            if (name.trim() && comment.trim()) {
+                const commentData = { 
+                    id: Date.now(), 
+                    name: name, 
+                    comment: comment, 
+                    rating: rating,
+                    timestamp: new Date().toLocaleString(),
+                    replies: [] 
+                };
                 saveComment(commentData);
-                addComment(commentData);
+                renderComment(commentData);
 
+                // Reset fields
                 document.getElementById('name').value = '';
                 document.getElementById('comment').value = '';
+                document.querySelectorAll('input[name="star"]').forEach(r => r.checked = false);
             } else {
-                alert('Please fill out both fields.');
+                alert('Please provide your name and a comment.');
             }
         }
 
-        function addComment(commentData, parentElement = null) {
-            var commentSection = parentElement || document.getElementById('comments-section');
+        function renderComment(data, isReply = false, parentId = null) {
+            const container = document.createElement('div');
+            container.classList.add('comment');
+            if (isReply) container.style.marginLeft = "30px";
+            container.setAttribute('data-id', data.id);
 
-            var newComment = document.createElement('div');
-            newComment.classList.add('comment');
-            newComment.setAttribute('data-id', commentData.id);
+            container.innerHTML = `
+                <h3>${data.name} ${data.rating !== "None" ? '<span style="color:#f1c40f; font-size:0.9rem;">— ' + data.rating + '★</span>' : ''}</h3>
+                <p>${data.comment}</p>
+                <div class="timestamp">${data.timestamp}</div>
+                <div class="comment-actions">
+                    <button class="action-btn" onclick="toggleReply('${data.id}')">Reply</button>
+                    <button class="action-btn delete-btn" onclick="deleteComment('${data.id}')">Delete</button>
+                </div>
+                <div id="reply-form-${data.id}" class="reply-form">
+                    <textarea id="reply-text-${data.id}" rows="2" placeholder="Write a reply..."></textarea>
+                    <button onclick="submitReply('${data.id}')" style="padding: 5px 15px; margin-top:5px;">Post Reply</button>
+                </div>
+                <div id="replies-${data.id}" class="reply-container"></div>
+            `;
 
-            var commentHeader = document.createElement('h3');
-            commentHeader.textContent = commentData.name;
-
-            var commentText = document.createElement('p');
-            commentText.textContent = commentData.comment;
-
-            var timestamp = document.createElement('div');
-            timestamp.classList.add('timestamp');
-            timestamp.textContent = commentData.timestamp;
-
-            var replyButton = document.createElement('button');
-            replyButton.classList.add('reply-button');
-            replyButton.textContent = 'Reply';
-            replyButton.onclick = function () {
-                toggleReplyForm(newComment);
-            };
-
-            var deleteButton = document.createElement('button');
-            deleteButton.classList.add('delete-button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.onclick = function () {
-                deleteComment(newComment);
-            };
-
-            newComment.appendChild(commentHeader);
-            newComment.appendChild(commentText);
-            newComment.appendChild(timestamp);
-            newComment.appendChild(replyButton);
-            newComment.appendChild(deleteButton);
-
-            var replyForm = createReplyForm(commentData.name, newComment);
-            newComment.appendChild(replyForm);
-
-            commentSection.appendChild(newComment);
+            if (isReply && parentId) {
+                document.getElementById(`replies-${parentId}`).appendChild(container);
+            } else {
+                document.getElementById('comments-section').prepend(container);
+            }
         }
 
-        function toggleReplyForm(commentElement) {
-            var replyForm = commentElement.querySelector('.reply-form');
-            replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+        function toggleReply(id) {
+            const form = document.getElementById(`reply-form-${id}`);
+            form.style.display = form.style.display === 'block' ? 'none' : 'block';
         }
 
-        function createReplyForm(parentName, commentElement) {
-            var replyForm = document.createElement('div');
-            replyForm.classList.add('reply-form');
-
-            var replyTextarea = document.createElement('textarea');
-            replyTextarea.rows = 3;
-            replyForm.appendChild(replyTextarea);
-
-            var submitReplyButton = document.createElement('button');
-            submitReplyButton.textContent = 'Submit Reply';
-            submitReplyButton.onclick = function () {
-                var replyText = replyTextarea.value;
-                if (replyText) {
-                    var commentData = {
-                        id: Date.now(),
-                        name: 'Admin',
-                        comment: replyText,
-                        timestamp: new Date().toLocaleString(),
-                        parent: parentName
-                    };
-                    saveComment(commentData);
-                    addComment(commentData, commentElement);
-                    replyTextarea.value = '';
-                    replyForm.style.display = 'none';
-                }
-            };
-            replyForm.appendChild(submitReplyButton);
-
-            return replyForm;
+        function submitReply(parentId) {
+            const text = document.getElementById(`reply-text-${parentId}`).value;
+            if (text.trim()) {
+                const replyData = {
+                    id: Date.now(),
+                    name: "Admin / Peer",
+                    comment: text,
+                    rating: "None",
+                    timestamp: new Date().toLocaleString()
+                };
+                
+                // For this demo, we append visually. In a real app, you'd update the parent object in LocalStorage.
+                renderComment(replyData, true, parentId);
+                document.getElementById(`reply-text-${parentId}`).value = '';
+                toggleReply(parentId);
+                
+                // Simple save for persistence
+                const comments = JSON.parse(localStorage.getItem('mech_comments')) || [];
+                comments.push({...replyData, parentId: parentId});
+                localStorage.setItem('mech_comments', JSON.stringify(comments));
+            }
         }
 
-        function saveComment(commentData) {
-            var comments = JSON.parse(localStorage.getItem('comments')) || [];
-            comments.push(commentData);
-            localStorage.setItem('comments', JSON.stringify(comments));
+        function saveComment(data) {
+            const comments = JSON.parse(localStorage.getItem('mech_comments')) || [];
+            comments.push(data);
+            localStorage.setItem('mech_comments', JSON.stringify(comments));
         }
 
-        function deleteComment(commentElement) {
-            var commentId = commentElement.getAttribute('data-id');
-            var comments = JSON.parse(localStorage.getItem('comments')) || [];
-            comments = comments.filter(comment => comment.id != commentId);
-            localStorage.setItem('comments', JSON.stringify(comments));
-            commentElement.remove();
+        function deleteComment(id) {
+            if(confirm("Delete this comment?")) {
+                let comments = JSON.parse(localStorage.getItem('mech_comments')) || [];
+                comments = comments.filter(c => c.id != id && c.parentId != id);
+                localStorage.setItem('mech_comments', JSON.stringify(comments));
+                document.querySelector(`[data-id="${id}"]`).remove();
+            }
         }
 
         function loadComments() {
-            var comments = JSON.parse(localStorage.getItem('comments')) || [];
-            comments.forEach(commentData => {
-                addComment(commentData);
-            });
+            const comments = JSON.parse(localStorage.getItem('mech_comments')) || [];
+            // Sort to show main comments first, then attach replies
+            const mainComments = comments.filter(c => !c.parentId);
+            const replies = comments.filter(c => c.parentId);
+
+            mainComments.forEach(c => renderComment(c));
+            replies.forEach(r => renderComment(r, true, r.parentId));
         }
     </script>
 </body>
-
 </html>

@@ -3,185 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Model Question Papers - Layout 2</title>
+    <title>Model Question Papers | Mechanical Hub</title>
     <style>
+        :root {
+            --primary-bg: #1a1d23;
+            --secondary-bg: #282c34;
+            --accent-color: #61dafb;
+            --text-main: #ffffff;
+            --text-dim: #abb2bf;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #fff3e0;
-            padding: 20px;
+            min-height: 100vh;
         }
+
         h1 {
-            font-size: 2em;
+            font-size: 2.2rem;
             text-align: center;
-            color: #e65100;
-            margin-bottom: 20px;
-            width: 100%;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
+
         .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
             width: 100%;
+            max-width: 1000px;
         }
+
         .dropdown {
             position: relative;
             width: 100%;
-            max-width: 300px;
-        }
-        .dropdown-btn {
-            width: 100%;
-            padding: 15px;
-            text-decoration: none;
-            color: #e65100;
-            background-color: transparent;
-            border: 2px solid #e65100;
-            border-radius: 8px;
-            text-align: center;
-            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            font-size: 1em;
-            display: block;
-        }
-        .dropdown-btn:hover {
-            background-color: #e65100;
-            color: white;
-            box-shadow: 0px 4px 15px rgba(230, 81, 0, 0.4);
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            width: 100%;
-            border-radius: 0 0 8px 8px;
-        }
-        .dropdown-content a {
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            color: black;
-            background-color: white;
-            transition: background-color 0.3s;
-        }
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-        .show {
-            display: block;
-        }
-    </style>
-    <script>
-        function toggleDropdown(dropdownId) {
-            document.getElementById(dropdownId).classList.toggle("show");
+            background: var(--secondary-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: border-color 0.3s;
         }
 
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropdown-btn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
+        .dropdown:hover {
+            border-color: var(--accent-color);
         }
-    </script>
+
+        .dropdown-btn {
+            width: 100%;
+            padding: 18px;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .dropdown-btn:hover {
+            background: rgba(97, 218, 251, 0.05);
+        }
+
+        /* Arrow animation */
+        .dropdown-btn::after {
+            content: '▼';
+            font-size: 0.8rem;
+            transition: transform 0.3s;
+            color: var(--accent-color);
+        }
+
+        .dropdown.active .dropdown-btn::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background: #21252b;
+        }
+
+        .dropdown.active .dropdown-content {
+            max-height: 500px; /* Adjust based on content */
+        }
+
+        .dropdown-content a {
+            padding: 12px 20px;
+            text-decoration: none;
+            display: block;
+            color: var(--text-dim);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(97, 218, 251, 0.1);
+            color: var(--accent-color);
+            padding-left: 25px;
+        }
+
+        .not-found {
+            color: #ff6b6b !important;
+            font-style: italic;
+            pointer-events: none;
+        }
+
+        /* Mobile specific spacing */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.6rem; }
+            .container { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-    <h1>MODEL QUESTION PAPERS</h1>
+
+    <h1>Model Question Papers</h1>
+
     <div class="container">
         <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown('dropdown1')">Semester-1</div>
-            <div id="dropdown1" class="dropdown-content">
-                <a href="pdf/modelpapers/sem-1/C.pdf">c</a>
-                <a href="pdf/modelpapers/sem-1/Computer Programming in C (R-18).pdf">Computer Programming in C (R-18)</a>
-                <a href="pdf/modelpapers/sem-1/MAthematics-I.pdf">M-1</a>
-                <a href="pdf/modelpapers/sem-1/Physics - I.pdf">Physics 2-1</a>
-                <a href="pdf/modelpapers/sem-1/Physics.pdf">Physics</a>
+            <button class="dropdown-btn" onclick="toggleAccordion(this)">Semester-1</button>
+            <div class="dropdown-content">
+                <a href="pdf/modelpapers/sem-1/C.pdf">C Programming</a>
+                <a href="pdf/modelpapers/sem-1/Computer Programming in C (R-18).pdf">CP in C (R-18)</a>
+                <a href="pdf/modelpapers/sem-1/MAthematics-I.pdf">Mathematics-I</a>
+                <a href="pdf/modelpapers/sem-1/Physics - I.pdf">Physics-I</a>
                 <a href="pdf/CLICK HERE .pptx">Follow Me</a>
             </div>
         </div>
+
         <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown('dropdown2')">Semester-2</div>
-            <div id="dropdown2" class="dropdown-content">
+            <button class="dropdown-btn" onclick="toggleAccordion(this)">Semester-2</button>
+            <div class="dropdown-content">
                 <a href="pdf/modelpapers/sem-2/Chemistry (R-18).pdf">Chemistry (R-18)</a>
-                <a href="pdf/modelpapers/sem-2/Engineering Mathematics-II (R-18).pdf">Engineering Mathematics-II (R-18)</a>
+                <a href="pdf/modelpapers/sem-2/Engineering Mathematics-II (R-18).pdf">Mathematics-II (R-18)</a>
                 <a href="pdf/CLICK HERE .pptx">Follow Me</a>
             </div>
         </div>
+
         <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown('dropdown3')">Semester-3</div>
-            <div id="dropdown3" class="dropdown-content">
-                <a href="pdf/modelpapers/sem-3/(R-17 Reg)Thermodynamics.pdf">(R-17 Reg)Thermodynamics.pdf</a>
-                <a href="pdf/modelpapers/sem-3/(R-17) Metrology and machine tools.pdf">(R-17) Metrology and machine tools</a>
+            <button class="dropdown-btn" onclick="toggleAccordion(this)">Semester-3</button>
+            <div class="dropdown-content">
+                <a href="pdf/modelpapers/sem-3/(R-17 Reg)Thermodynamics.pdf">Thermodynamics (R-17)</a>
+                <a href="pdf/modelpapers/sem-3/(R-17) Metrology and machine tools.pdf">Metrology & Machine Tools</a>
                 <a href="pdf/modelpapers/sem-3/B E E.pdf">BEE</a>
-                <a href="pdf/modelpapers/sem-3/Engineering Mechanics (R18).pdf">Engineering Mechanics (R18)</a>
-                <a href="pdf/modelpapers/sem-3/Probability and Statistics.pdf">Probability and Statistics</a>
-                <a href="pdf/modelpapers/sem-3/Strength Of Materials-II (R18).pdf">Strength Of Materials-II (R18)</a>
-                <a href="pdf/modelpapers/sem-3/THERMODYNAMICS.pdf">THERMODYNAMICS</a>
+                <a href="pdf/modelpapers/sem-3/Engineering Mechanics (R18).pdf">Eng. Mechanics (R18)</a>
+                <a href="pdf/modelpapers/sem-3/Strength Of Materials-II (R18).pdf">SOM-II (R18)</a>
                 <a href="pdf/CLICK HERE .pptx">Follow Me</a>
             </div>
         </div>
+
         <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown('dropdown4')">Semester-4</div>
-            <div id="dropdown4" class="dropdown-content">
-                <a href="pdf/modelpapers/sem-4/(R-17) Thermal Engg-I.pdf">(R-17) Thermal Engg-I</a>
-                <a href="pdf/modelpapers/sem-4/(R-18) Fluid Mech.pdf">(R-18) Fluid Mech</a>
-                <a href="pdf/modelpapers/sem-4/(R-18) K of Ma (1).pdf">(R-18) K of Ma (1)</a>
-                <a href="pdf/modelpapers/sem-4/(R-18) K of Ma.pdf">(R-18) K of Ma</a>
-                <a href="pdf/modelpapers/sem-4/(Regular) Machine Drawing.pdf">(Regular) Machine Drawing</a>
-                <a href="pdf/modelpapers/sem-4/Fluid Mechanics and Hudralic Machines (R-18).pdf">Fluid Mechanics and Hudralic Machines (R-18)</a>
-                <a href="pdf/modelpapers/sem-4/Kinematics of Machinery.pdf">Kinematics of Machinery</a>
-                <a href="pdf/modelpapers/sem-4/MACHINE DRAWING (R-18).pdf">MACHINE DRAWING (R-18)</a>
-                <a href="pdf/modelpapers/sem-4/Manufacturing Process(Regular).pdf">Manufacturing Process(Regular)</a>
-                <a href="pdf/modelpapers/sem-4/Manufacturing Processes (R-18).pdf">Manufacturing Processes (R-18)</a>
+            <button class="dropdown-btn" onclick="toggleAccordion(this)">Semester-4</button>
+            <div class="dropdown-content">
+                <a href="pdf/modelpapers/sem-4/(R-17) Thermal Engg-I.pdf">Thermal Engg-I</a>
+                <a href="pdf/modelpapers/sem-4/(R-18) Fluid Mech.pdf">Fluid Mech (R-18)</a>
+                <a href="pdf/modelpapers/sem-4/(Regular) Machine Drawing.pdf">Machine Drawing</a>
+                <a href="pdf/modelpapers/sem-4/Manufacturing Processes (R-18).pdf">Manufacturing Processes</a>
                 <a href="pdf/CLICK HERE .pptx">Follow Me</a>
             </div>
         </div>
+
         <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown('dropdown5')">Semester-5</div>
-            <div id="dropdown5" class="dropdown-content">
-                <a href="pdf/modelpapers/sem-5/(R-17) Automobile Engg.pdf">(R-17) Automobile Engg</a>
-                <a href="pdf/modelpapers/sem-5/Design of Machine Members -II.pdf">Design of Machine Members -II</a>
-                <a href="pdf/modelpapers/sem-5/Dynamics of Michanary.pdf">Dynamics of Michanary</a>
-                <a href="pdf/modelpapers/sem-5/operation_research QP.pdf">operation_research QP</a> 
-                <a href="pdf/modelpapers/sem-5/Reg-Automobile Engineering.pdf">Reg-Automobile Engineering</a>
-                <a href="pdf/modelpapers/sem-5/Thermal Engg-I.pdf">Thermal Engg-I</a>
+            <button class="dropdown-btn" onclick="toggleAccordion(this)">Semester-5</button>
+            <div class="dropdown-content">
+                <a href="pdf/modelpapers/sem-5/(R-17) Automobile Engg.pdf">Automobile Engg</a>
+                <a href="pdf/modelpapers/sem-5/Design of Machine Members -II.pdf">DMM-II</a>
+                <a href="pdf/modelpapers/sem-5/Dynamics of Michanary.pdf">Dynamics of Machinery</a>
                 <a href="pdf/CLICK HERE .pptx">Follow Me</a>
             </div>
         </div>
+
         <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown('dropdown6')">Semester-6</div>
-            <div id="dropdown6" class="dropdown-content">
-                <a href="pdf/modelpapers/sem-6/Design of Machine Members-II.pdf">Design of Machine Members-II</a>
+            <button class="dropdown-btn" onclick="toggleAccordion(this)">Semester-6</button>
+            <div class="dropdown-content">
+                <a href="pdf/modelpapers/sem-6/Design of Machine Members-II.pdf">DMM-II</a>
                 <a href="pdf/modelpapers/sem-6/Heat Transfer.pdf">Heat Transfer</a>
                 <a href="pdf/modelpapers/sem-6/Thermal Engineering-II.pdf">Thermal Engineering-II</a>
                 <a href="pdf/CLICK HERE .pptx">Follow Me</a>
             </div>
         </div>
+
         <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown('dropdown7')">Semester-7</div>
-            <div id="dropdown7" class="dropdown-content">
-                <a href="#">NOT FOUND</a>
-                <a href="pdf/CLICK HERE .pptx">Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown('dropdown8')">Semester-8</div>
-            <div id="dropdown8" class="dropdown-content">
-                <a href="#">NOT FOUND</a>
+            <button class="dropdown-btn" onclick="toggleAccordion(this)">Semesters 7 & 8</button>
+            <div class="dropdown-content">
+                <a href="#" class="not-found">Resources Not Found</a>
                 <a href="pdf/CLICK HERE .pptx">Follow Me</a>
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleAccordion(button) {
+            const dropdown = button.parentElement;
+            
+            // Optional: Close other open dropdowns (Accordion behavior)
+            document.querySelectorAll('.dropdown').forEach(item => {
+                if (item !== dropdown) item.classList.remove('active');
+            });
+
+            dropdown.classList.toggle('active');
+        }
+
+        // Close when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-btn')) {
+                document.querySelectorAll('.dropdown').forEach(item => {
+                    item.classList.remove('active');
+                });
+            }
+        }
+    </script>
 </body>
 </html>

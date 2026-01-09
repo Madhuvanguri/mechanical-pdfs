@@ -3,300 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select the Year</title>
+    <title>Mechanical Resources | Sem 3 & 4</title>
     <style>
+        :root {
+            --primary-bg: #1a1d23;
+            --secondary-bg: #282c34;
+            --accent-color: #61dafb;
+            --text-main: #ffffff;
+            --text-dim: #abb2bf;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-            padding: 20px;
         }
+
         h1, h2 {
-            font-size: 2em;
-            text-align: center;
-            color: gray;
-            margin: 20px 0;
-            font-weight: bold;
-            animation: fadeIn 2s ease-in;
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin: 30px 0 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeIn 1.5s ease-in;
         }
+
         .container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
             width: 100%;
-            max-width: 600px;
-            margin: 20px 0;
+            max-width: 800px;
+            margin-bottom: 40px;
         }
-        .dropdown {
-            position: relative;
-            display: inline-block;
+
+        /* --- Accordion Item --- */
+        .accordion-item {
+            background-color: var(--secondary-bg);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .accordion-item:hover {
+            border-color: var(--accent-color);
+        }
+
+        .accordion-header {
             width: 100%;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 100%;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-        .dropdown:hover .dropdown-content, .dropdown-content.show {
-            display: block;
-        }
-        .dropdown button {
-            padding: 15px 30px;
-            text-decoration: none;
-            color: white;
-            background-color: #007BFF;
-            border-radius: 8px;
-            text-align: center;
-            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-            font-size: 1em;
-            animation: slideIn 1s ease-in;
+            padding: 20px;
+            background: none;
             border: none;
+            color: var(--text-main);
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
-            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .dropdown button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-            box-shadow: 0px 4px 15px rgba(0, 123, 255, 0.4);
+
+        .accordion-header::after {
+            content: '▼';
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            transition: 0.3s;
         }
-        @media (min-width: 600px) {
-            .container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            h1, h2 {
-                font-size: 2.5em;
-            }
-            .dropdown button {
-                font-size: 1.25em;
-                padding: 20px 40px;
-            }
+
+        .accordion-item.active .accordion-header::after {
+            transform: rotate(180deg);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+
+        /* --- Accordion Content (Pushes content down, NO overlap) --- */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
+            background: rgba(0, 0, 0, 0.2);
         }
-        @keyframes slideIn {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+
+        .accordion-item.active .accordion-content {
+            max-height: 2000px; /* High enough to contain links */
+            transition: max-height 0.4s ease-in-out;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .accordion-content a {
+            display: block;
+            padding: 14px 25px;
+            color: var(--text-dim);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .accordion-content a:hover {
+            background-color: rgba(97, 218, 251, 0.1);
+            color: var(--accent-color);
+            padding-left: 35px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        @media (max-width: 600px) {
+            h1, h2 { font-size: 1.5rem; }
+            .accordion-header { padding: 15px; font-size: 1rem; }
         }
     </style>
 </head>
 <body>
-    <h1>3RD SEMESTER</h1>
-    <div class="container">
-        <div class="dropdown">
-            <button onclick="toggleDropdown(event)">Probability & Statistics and Complex Variables</button>
-            <div class="dropdown-content">
-                <a href="pdf/sem3/m3/P&S  chapter 1.pdf">Chapter 1</a>
-                <a href="pdf/sem3/m3/maths 2-1.pdf">Chapter 2.1</a>
-                <a href="pdf/sem3/m3/P&S chap 2.pdf"> chapter-2</a>
-                <a href="pdf/sem3/m3/3,4,5(2).pdf">chapter 3-4-5</a>
-                <a href="pdf/sem3/m3/Dec 17, Doc 2.pdf">P&SandC</a>
-                <a href="pdf/sem3/m3/Adobe Scan 4 Dec 2021.pdf">Full Notes</a>
-                <a href="pdf/sem3/m3/maths 3rd chapter 3rd sem.pdf">Chapter-3</a>
-                <a href="pdf/sem3/m3/MATHS SHORT ANSWERS.pdf">Short Answers</a>
-                <a href="pdf/sem3/m3/P&S  and CV Question Bank.docx">Question Bank</a>
-                <a href="pdf/CLICK HERE .pptx">Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button onclick="toggleDropdown(event)">Basic Electrical Engineering</button>
-            <div class="dropdown-content">
-                <a href="pdf/sem3/bee/bee important questions.pdf">BEE important questions</a>
-                <a href="pdf/sem3/bee/Bee notes.pdf">BEE NOTES</a>
-                <a href="pdf/sem3/bee/Bee PDFs.pdf">BEE PDF-1</a>
-                <a href="pdf/sem3/bee/bee unit-1.pdf">BEE UNIT-1</a>
-                <a href="pdf/sem3/bee/BEEE_Unit 4.pdf">BEE UNIT-4 </a>
-                <a href="pdf/sem3/bee/DC.Motor working&torque equation.pdf">DC.Motor working&torque equation</a>
-                <a href="pdf/sem3/bee/DocScanner Nov 21, 2021 8.02 PM.pdf">BEE FULL NOTES</a>
-                <a href="pdf/sem3/bee/Important questions.xlsx">Important QUESTIONS</a>
-                <a href="pdf/sem3/bee/unit-1 part-5.pdf">UNIT-1 PART-5</a>
-                <a href="pdf/sem3/bee/UNIT-I.pdf">UNIT-1.5</a>
-                <a href="pdf/sem3/bee/Unit1-part2.pdf">UNIT-1 PART-3</a>
-                <a href="pdf/CLICK HERE .pptx">Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button onclick="toggleDropdown(event)">Basic Electronics</button>
-            <div class="dropdown-content">
-                <a href="pdf/sem3/be/Be ...pdf">BE-1</a>
-                <a href="pdf/sem3/be/Be be.pdf">Be-notes</a>
-                <a href="pdf/sem3/be/BE chapter 1.pdf">Chapter-1</a>
-                <a href="pdf/sem3/be/BE chapter 2 continue(2).pdf">Chapter-1.5</a>
-                <a href="pdf/sem3/be/BE important questions.pdf">Important Questions</a>
-                <a href="pdf/sem3/be/BE impqs.docx">Important BE</a>
-                <a href="pdf/sem3/be/BE UNIT 5.pdf">Unit-5</a>
-                <a href="pdf/sem3/be/p-n junction diode.pdf">P_N junction diode</a>
-                <a href="pdf/sem3/be/UNIT-I.pdf">Unit-1</a>
-                <a href="pdf/sem3/be/UNIT-II.pdf">Unit-2</a>
-                <a href="pdf/CLICK HERE .pptx">Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button onclick="toggleDropdown(event)">Thermodynamics</button>
-            <div class="dropdown-content">
-                <a href="pdf/sem3/td/1st unit.pdf">UNIT-1</a>
-                <a href="pdf/sem3/td/2nd unit.pdf">UNIT-2</a>
-                <a href="pdf/sem3/td/2nd units.pdf">UNIT-2 UPDATED</a>
-                <a href="pdf/sem3/td/5-UNITS-NOTES.pdf">UNIT-5-UPDATED</a>
-                <a href="pdf/sem3/td/5th unit.pdf">UNIT-5</a>
-                <a href="pdf/sem3/td/Cycles.pdf">CYCLES</a>
-                <a href="pdf/sem3/td/notes closed andopen.pdf">CLOSED AND OPEN</a>
-                <a href="pdf/sem3/td/TD cycles-5.pdf">CYCLES-5</a>
-                <a href="pdf/sem3/td/TD digital notes.pdf">TD FULL DIGITAL NOTES</a>
-                <a href="pdf/sem3/td/TD important questions.pdf">IMP QUESTIONS</a>
-                <a href="pdf/sem3/td/TD important questions 2 .pdf">IMP QUESTIONS PART-2</a>
-                <a href="pdf/CLICK HERE .pptx">Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button onclick="toggleDropdown(event)">Metallurgy and Material Science</button>
-            <div class="dropdown-content">
-                <a href="pdf/sem3/mms/MMS 1-5 UNITS.pdf">UNITS-1 TO 5</a>
-                <a href="pdf/sem3/mms/MMS Class notes.pdf">CLASS NOTES</a>
-                <a href="pdf/sem3/mms/MMS unit 5.docx">UNIT-5</a>
-                <a href="pdf/sem3/mms/UNIT-3 MMS.pdf">PDF-3.2</a>
-                <a href="pdf/sem3/mms/try-risk/Mms (2).pdf">GUESS (try on your won risk)</a>
-                <a href="pdf/sem3/mms/try-risk/Mms.pdf">GUESS (try on your won risk)</a>
-                <a href="pdf/CLICK HERE .pptx">Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button onclick="toggleDropdown(event)">Mechanics of Solids</button>
-            <div class="dropdown-content">
-                <a href="pdf/sem3/mos/MOS 1.docx">Mos-1</a>
-                <a href="pdf/sem3/mos/MOS-1unit (1).pdf">UNIT-1</a>
-                <a href="pdf/sem3/mos/MOS-2,3,4UNITS (1).pdf">UNIT- 2, 3, 4</a>
-                <a href="pdf/sem3/mos/MOS 4.docx">UNIT-4</a>
-                <a href="pdf/sem3/mos/Unit-III (Flexural & Shear Stresses).pdf">Unit-III (Flexural & Shear Stresses)</a>
-                <a href="pdf/sem3/mos/Unit-IV (Principal Stresses & Strains) (1).pdf">Unit-IV (Principal Stresses & Strains)</a>
-                <a href="pdf/sem3/mos/Unit-V (Thin Cylinders & Torsion of circular shafts).pdf">Unit-V (Thin Cylinders & Torsion of circular shafts)</a>
-                <a href="pdf/sem3/mos/Strength of Materials 1WM Sample.pdf">MOS NOTES</a>
-                <a href="pdf/sem3/mos/mos imp questions.pdf">MOS imp questions</a>
-                <a href="pdf/CLICK HERE .pptx">Follow Me</a>
-            </div>
-        </div>
-    </div>
-    <h2>4TH SEMESTER</h2>
-    <div class="container">
-        <div class="dropdown">
-            <button onclick="toggleDropdown(event)">Business Economics and Financial Analysis</button>
-            <div class="dropdown-content">
-                <a href="pdf/sem4/befa/BEFA.pdf">BEFA NOTES</a>
-                <a href="pdf/sem4/befa/BEFA  UNIT-III Edited.pdf">UNIT-2 UPDATED</a>
-                <a href="pdf/sem4/befa/BEFA IMPORTANT QUESTIONS UNIT WISE.docx">BEFA IMPORTANT QUESTIONS UNIT WISE</a>
-                <a href="pdf/sem4/befa/BEFA Unit 3.pdf">UNIT-3</a>
-                <a href="pdf/sem4/befa/BEFA UNITf-IV edition.pdf">UNIT-4</a>
-                <a href="pdf/sem4/befa/Financial analysis through ratios .pdf">Financial analysis through ratios</a>
-                <a href="pdf/sem4/befa/LAW-OF-DEMAND-converted.pdf">LAW-OF-DEMAND-converted</a>
-                <a href="pdf/sem4/befa/BEFA ACCOUNTS.pdf">BEFA ACCOUNTS</a>
-                <a href="pdf/sem4/befa/BEFA  UNIT-III.docx"> UNIT-3</a>
-                <a href="pdf/CLICK HERE .pptx">Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button onclick="toggleDropdown(event)">Fluid Mechanics and Hydraulic Machines</button>
-            <div class="dropdown-content">
-                <a href="pdf/sem4/fmhm/FMHM class notes.pdf">FULL CLASS NOTES</a>
-                <a href="pdf/sem4/fmhm/FMHM important questions.pdf">FMHM important questions</a>
-                <a href="pdf/CLICK HERE .pptx">Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button onclick="toggleDropdown(event)">Kinematics of Machinery</button>
-            <div class="dropdown-content">
-                <a href="pdf/sem4/kom/4 bar chain.pdf"> 4 BAR CHAIN</a>
-                <a href="pdf/sem4/kom/kom important questions.docx"> KOM IMP Q</a>
-                <a href="pdf/sem4/kom/Kom important questions.jpg">KOM IMP Q-2</a>
-                <a href="pdf/sem4/kom/kom.docx">KOM NOTES</a>
-                <a href="pdf/sem4/kom/Unit-V (Thin Cylinders & Torsion of circular shafts).pdf">Unit-V (Thin Cylinders & Torsion of circular shafts)</a>
-                <a href="pdf/CLICK HERE .pptx">Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button onclick="toggleDropdown(event)">Manufacturing Process</button>
-            <div class="dropdown-content">
-                <a href="pdf/sem4/mp/IMG-20220527-WA0001.jpg">IMPORTANT UNIT-1</a>
-                <a href="pdf/sem4/mp/Important questions page 2.jpg">IMPORTANT UNIT-2</a>
-                <a href="pdf/sem4/mp/Important questions page 3.jpg">IMPORTANT UNIT-3</a>
-                <a href="pdf/sem4/mp/Important questions page 4.jpg">IMPORTANT UNIT-4</a>
-                <a href="pdf/sem4/mp/Metal casting processes_1.pdf">Metal casting processes</a>
-                <a href="pdf/sem4/mp/MP Assignment important questions.pdf">Assignment important questions</a>
-                <a href="pdf/sem4/mp/MP class notes.pdf">FULL CLASS NOTES</a>
-                <a href="pdf/CLICK HERE .pptx">Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button onclick="toggleDropdown(event)">Machine Drawing</button>
-            <div class="dropdown-content">
-                <a href="pdf/sem4/md/Important questions page 1.jpg">IMPORTANT PAGE-1</a>
-                <a href="pdf/sem4/md/Important questions page 2.jpg">IMPORTANT PAGE-2</a>
-                <a href="pdf/sem4/md/Important questions page 3.jpg">IMPORTANT PAGE-3</a>
-                <a href="pdf/CLICK HERE .pptx">Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button onclick="toggleDropdown(event)">Thermal Engineering - I</button>
-            <div class="dropdown-content">
-                <a href="pdf/sem4/te-1/Important questions page 2.jpg">IMPORTANT PAGE-2</a>
-                <a href="pdf/sem4/te-1/Important questions 3.jpg">IMPORTANT PAGE-3</a>
-                <a href="pdf/sem4/te-1/Important questions page 4.jpg">IMPORTANT PAGE-4</a>
-                <a href="pdf/sem4/te-1/Important questions page 5 (2).jpg">IMPORTANT PAGE-5</a>
-                <a href="pdf/sem4/te-1/Important questions page 6.jpg">IMPORTANT PAGE-6</a>
-                <a href="pdf/sem4/te-1/TapScanner 04-14-2022-14꞉28.pdf">Full Notes</a>
-                <a href="pdf/sem4/te-1/TE-1  Class Notes.pdf">Class Notes</a>
-                <a href="pdf/sem4/te-1/Te-1 notes.pdf">Class Notes-2</a>
-                <a href="pdf/sem4/te-1/digital notes/TE-I .pdf">Digital notes-1</a>
-                <a href="pdf/sem4/te-1/digital notes/TE-I full notes.pdf">Full Digital Notes</a>
-                <a href="pdf/sem4/te-1/newly arrived/Combustion.pdf">Combustion(new)</a>
-                <a href="pdf/sem4/te-1/newly arrived/III-1 MECH (R-17) Thermal Engg-I.pdf">pdf(new)</a>
-                <a href="pdf/sem4/te-1/newly arrived/TE -1,DIGITAL NOTES(2018-19).pdf">Digital Notes(new)</a>
-                <a href="pdf/sem4/te-1/newly arrived/TE-1 model paper.pdf">Model Paper(new)</a>
-                <a href="pdf/sem4/te-1/newly arrived/Thermal Engineering-I (Mahesh M Rathore) (z-lib.org).pdf">Digital pdf(new)</a>
-                <a href="pdf/sem4/te-1/newly arrived/TE. 4 unit.pdf">Unit-4(new)</a>
-                <a href="pdf/CLICK HERE .pptx">Follow Me</a>
-            </div>
-        </div>
-    </div>
-    <script>
-        function toggleDropdown(event) {
-            let dropdownContent = event.target.nextElementSibling;
-            dropdownContent.classList.toggle('show');
-        }
 
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropdown button')) {
-                let dropdowns = document.getElementsByClassName("dropdown-content");
-                for (let i = 0; i < dropdowns.length; i++) {
-                    let openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
+    <h1>3rd Semester</h1>
+    <div class="container">
+        
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">Probability & Statistics</button>
+            <div class="accordion-content">
+                <a href="pdf/sem3/m3/P&S chapter 1.pdf">Chapter 1</a>
+                <a href="pdf/sem3/m3/maths 2-1.pdf">Chapter 2.1</a>
+                <a href="pdf/sem3/m3/Adobe Scan 4 Dec 2021.pdf">Full Notes</a>
+                <a href="pdf/sem3/m3/P&S and CV Question Bank.docx">Question Bank</a>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">Thermodynamics</button>
+            <div class="accordion-content">
+                <a href="pdf/sem3/td/TD digital notes.pdf">Full Digital Notes</a>
+                <a href="pdf/sem3/td/TD important questions.pdf">Important Questions</a>
+                <a href="pdf/sem3/td/Cycles.pdf">Cycles</a>
+            </div>
+        </div>
+
+    </div>
+
+    <h2>4th Semester</h2>
+    <div class="container">
+        
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">Fluid Mechanics & HM</button>
+            <div class="accordion-content">
+                <a href="pdf/sem4/fmhm/FMHM class notes.pdf">Full Class Notes</a>
+                <a href="pdf/sem4/fmhm/FMHM important questions.pdf">Important Questions</a>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">Thermal Engineering - I</button>
+            <div class="accordion-content">
+                <a href="pdf/sem4/te-1/TE-1 Class Notes.pdf">Class Notes</a>
+                <a href="pdf/sem4/te-1/digital notes/TE-I full notes.pdf">Full Digital Notes</a>
+                <a href="pdf/sem4/te-1/newly arrived/TE-1 model paper.pdf">Model Paper</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            
+            // Close other items in the same container
+            const container = item.parentElement;
+            container.querySelectorAll('.accordion-item').forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
                 }
-            }
+            });
+
+            // Toggle current item
+            item.classList.toggle('active');
         }
     </script>
 </body>

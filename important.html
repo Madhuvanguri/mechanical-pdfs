@@ -3,23 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full Display Banner</title>
+    <title>Resource Update | Mechanical Hub</title>
     <style>
+        :root {
+            --primary-bg: #1a1d23;
+            --secondary-bg: #282c34;
+            --accent-color: #61dafb;
+            --text-main: #ffffff;
+            --warning-gold: #ffcc00;
+        }
+
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #ffcc00, #ff9900);
-            color: #333;
-            text-align: center;
+            background: var(--primary-bg);
+            color: var(--text-main);
             overflow: hidden;
         }
+
+        /* --- Full Screen Banner --- */
         .banner {
             flex: 1;
             display: flex;
@@ -28,47 +35,73 @@
             width: 100%;
             padding: 20px;
             box-sizing: border-box;
+            background: radial-gradient(circle, #2c313a 0%, #1a1d23 100%);
         }
-        .banner h1 {
-            font-size: 3em;
-            animation: fadeIn 2s ease-in-out;
+
+        .banner-card {
+            max-width: 800px;
+            padding: 40px;
+            background: var(--secondary-bg);
+            border-left: 8px solid var(--warning-gold);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            animation: slideUpFade 1s ease-out;
+            text-align: center;
+        }
+
+        .banner-card h1 {
+            font-size: 2.5em;
             margin: 0;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: var(--text-main);
+            line-height: 1.4;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
+
+        .highlight {
+            color: var(--warning-gold);
+            display: block;
+            margin-top: 10px;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
+
+        /* --- Animations --- */
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         footer {
             width: 100%;
-            padding: 10px;
-            background: #333;
-            color: #fff;
+            padding: 20px;
+            background: #111;
+            color: var(--accent-color);
             text-align: center;
             font-size: 1em;
+            letter-spacing: 1px;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
+
+        /* --- Mobile Optimization --- */
         @media (max-width: 600px) {
-            .banner h1 {
-                font-size: 2em;
-            }
-            footer {
-                font-size: 0.8em;
-            }
+            .banner-card { padding: 25px; margin: 10px; }
+            .banner-card h1 { font-size: 1.8em; }
+            footer { font-size: 0.8em; }
         }
     </style>
 </head>
 <body>
+
     <div class="banner">
-        <h1>All the important questions are shuffled with class notes section</h1>
+        <div class="banner-card">
+            <h1>All important questions are now integrated within the <span style="color:var(--accent-color)">Class Notes</span> section.</h1>
+            <span class="highlight">Check individual subject folders</span>
+        </div>
     </div>
+
     <footer>
         DEVELOPED BY: VANGURI MADHU
     </footer>
-    <script>
-        // Add any JavaScript you need here
-    </script>
+
 </body>
 </html>

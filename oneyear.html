@@ -3,279 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select the Year</title>
+    <title>1st Year Resources | Mechanical Hub</title>
     <style>
+        :root {
+            --primary-bg: #1a1d23;
+            --secondary-bg: #282c34;
+            --accent-color: #61dafb;
+            --text-main: #ffffff;
+            --text-dim: #abb2bf;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
             margin: 0;
-            background-color: #f0f0f0;
             padding: 20px;
-        }
-        h1, h2 {
-            font-size: 2em;
-            text-align: center;
-            color: gray;
-            margin: 20px 0;
-            font-weight: bold;
-            animation: fadeIn 2s ease-in;
-        }
-        .container {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            align-items: center;
+        }
+
+        h1 { color: var(--accent-color); margin: 30px 0; text-transform: uppercase; letter-spacing: 2px; }
+
+        .container {
             width: 100%;
-            max-width: 600px;
-            margin: 20px 0;
-        }
-        .dropdown {
-            position: relative;
-            width: 100%;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 100%;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            border-radius: 8px;
-            overflow: hidden;
-            transition: max-height 0.3s ease-in-out;
-        }
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-        .dropdown-btn {
-            padding: 15px 30px;
-            text-decoration: none;
-            color: white;
-            background-color: #007BFF;
-            border-radius: 8px;
-            text-align: center;
-            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-            font-size: 1em;
-            cursor: pointer;
-            animation: slideIn 1s ease-in;
-            width: 100%;
-        }
-        .dropdown-btn:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-            box-shadow: 0px 4px 15px rgba(0, 123, 255, 0.4);
-        }
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
             max-width: 800px;
-            height: 90%;
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Space between subject cards */
         }
-        .popup iframe {
+
+        /* --- Accordion Style (Prevents Overlap) --- */
+        .subject-card {
+            background: var(--secondary-bg);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden; /* Clips the content when closed */
+            transition: border-color 0.3s;
+        }
+
+        .subject-card:hover { border-color: var(--accent-color); }
+
+        .subject-header {
             width: 100%;
-            height: calc(100% - 40px);
+            padding: 20px;
+            background: none;
             border: none;
-        }
-        .popup .header {
+            color: var(--text-main);
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            background-color: #007BFF;
-            color: white;
         }
-        .popup .header .close-btn,
-        .popup .header .download-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.2em;
-            cursor: pointer;
+
+        .subject-header::after {
+            content: '▼';
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            transition: 0.3s;
         }
-        .popup .header .download-btn {
-            font-size: 1em;
+
+        .subject-card.active .subject-header::after { transform: rotate(180deg); }
+
+        /* The trick to stop overlapping: Use max-height and relative positioning */
+        .subject-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background: rgba(0, 0, 0, 0.2);
         }
-        @media (min-width: 600px) {
-            .container {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-between;
-            }
-            h1, h2 {
-                font-size: 2.5em;
-            }
-            .dropdown-btn {
-                font-size: 1.25em;
-                padding: 20px 40px;
-            }
+
+        .subject-card.active .subject-content {
+            max-height: 1000px; /* Big enough to show all links */
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+
+        .subject-content a {
+            display: block;
+            padding: 15px 25px;
+            color: var(--text-dim);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: 0.2s;
         }
-        @keyframes slideIn {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+
+        .subject-content a:hover {
+            background: rgba(97, 218, 251, 0.1);
+            color: var(--accent-color);
+            padding-left: 35px;
+        }
+
+        /* --- PDF Popup --- */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 95%; height: 90%;
+            background: var(--secondary-bg);
+            border: 1px solid var(--accent-color);
+            border-radius: 15px;
+            z-index: 9999;
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background: #21252b;
+        }
+
+        iframe { width: 100%; height: calc(100% - 60px); border: none; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
-    <h1>1ST SEMESTER</h1>
+
+    <h1>1st Year Resources</h1>
+
     <div class="container">
-        <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown(this)">Linear Algebra & Applied Calculus</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem1/m-1/Differential Equations  58.pdf" target="preview" download>Differential Equations</a>
-                <a href="pdf/sem1/m-1/Engineering Mathematics  270.pdf" target="preview" download>Engineering Mathematics</a>
-                <a href="pdf/sem1/m-1/LAAC class notes.pdf" target="preview" download>LAAC class notes</a>
-                <a href="pdf/sem1/m-1/math.pdf" target="preview" download>full m1</a>
-                <a href="pdf/sem1/m-1/Matrix-algbra-Handwritten-Notes.pdf" target="preview" download>Matrix-algbra-Handwritten-Notes</a>
-                <a href="pdf/sem1/m-1/CLICK HERE .pptx" target="preview" download>Follow Me</a>
+        <div class="subject-card">
+            <button class="subject-header" onclick="toggleSubject(this)">Linear Algebra & Calculus</button>
+            <div class="subject-content">
+                <a href="pdf/sem1/m-1/math.pdf">Full M1 Notes</a>
+                <a href="pdf/sem1/m-1/LAAC class notes.pdf">LAAC Class Notes</a>
+                <a href="pdf/sem1/m-1/Matrix-algbra-Handwritten-Notes.pdf">Matrix Algebra Notes</a>
             </div>
         </div>
-        <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown(this)">Engineering Physics</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem1/AP/Physics digital notes.pdf" target="preview" download>Physics digital notes</a>
-                <a href="pdf/sem1/AP/Physics hand written notes" target="preview" download>Physics hand written notes</a>
-                <a href="pdf/sem1/AP/CLICK HERE .pptx" target="preview" download>Follow Me</a>
+
+        <div class="subject-card">
+            <button class="subject-header" onclick="toggleSubject(this)">Engineering Physics</button>
+            <div class="subject-content">
+                <a href="pdf/sem1/AP/Physics digital notes.pdf">Physics Digital Notes</a>
+                <a href="pdf/sem1/AP/Physics hand written notes.pdf">Physics Handwritten Notes</a>
             </div>
         </div>
-        <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown(this)">C Programming for Problem Solving</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem1/cpps/CP USING C QB WITH ANSWERS.pdf" target="preview" download>C Programming</a>
-                <a href="pdf/sem1/AP/CLICK HERE .pptx" target="preview" download>Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown(this)">Engineering Graphics</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem1/eg/ENGINEERING GRAPHICS NOTES.pdf" target="preview" download>ENGINEERING GRAPHICS NOTES</a>
-                <a href="pdf/sem1/AP/CLICK HERE .pptx" target="preview" download>Follow Me</a>
+
+        <div class="subject-card">
+            <button class="subject-header" onclick="toggleSubject(this)">C Programming</button>
+            <div class="subject-content">
+                <a href="pdf/sem1/cpps/CP USING C QB WITH ANSWERS.pdf">C Programming Question Bank</a>
             </div>
         </div>
     </div>
-    <h2>2ND SEMESTER</h2>
-    <div class="container">
-        <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown(this)">Differential Equations & Vector Calculus</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem2/m2/(Vector Differentiation).xls" target="preview" download>Vector Differentiation</a>
-                <a href="pdf/sem2/m2/M -2 (5 UNITS)COURSE CONTENT5 UNIT VECTOR INTEGRATION(10).pdf" target="preview" download>(5 UNITS)COURSE CONTENT5 UNIT VECTOR INTEGRATION</a>
-                <a href="pdf/sem2/m2/M2.pdf" target="preview" download>M2</a>
-                <a href="pdf/sem2/m2/new doc 2016-12-30 10.41.12.pdf" target="preview" download>m2 notes</a>
-                <a href="pdf/sem2/m2/ODE &VC QUESTION BANK CIVIL.docx" target="preview" download>ODE &VC QUESTION BANK</a>
-                <a href="pdf/sem2/m2/unit 3.pdf" target="preview" download>unit-3</a>
-                <a href="pdf/sem2/m2/UNIT-4   VECTOR DIFFERENTIATION .pdf" target="preview" download>VECTOR DIFFERENTIATION</a>
-                <a href="pdf/sem2/m2/Unit-5 . Vector Integral theorems(Gauss,Greens&Stokes).pdf" target="preview" download>Vector Integral theorems(Gauss,Greens&Stokes)</a>
-                <a href="pdf/CLICK HERE .pptx" target="preview" download>Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown(this)">Engineering Chemistry</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem2/chemistry/Engineering Chemistry Jain n Jain_1_2.pdf" target="preview" download>Engineering Chemistry Jain n Jain_1_2</a>
-                <a href="pdf/sem2/chemistry/MunicipalWater treatment.pdf" target="preview" download>MunicipalWater treatment</a>
-                <a href="pdf/sem2/chemistry/Nernst_equation.pdf" target="preview" download>Nernst_equation</a>
-                <a href="pdf/sem2/chemistry/Soil Pollution (1).pdf" target="preview" download>Soil Pollution</a>
-                <a href="pdf/CLICK HERE .pptx" target="preview" download>Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown(this)">Engineering Mechanics</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem2/em/EM Notes UNIT-II.pdf" target="preview" download>unit-2</a>
-                <a href="pdf/sem2/em/EM Notes UNIT-III(2).pdf" target="preview" download>unit-3</a>
-                <a href="pdf/CLICK HERE .pptx" target="preview" download>Follow Me</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <div class="dropdown-btn" onclick="toggleDropdown(this)">English</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem2/english/Max_Students_Passed.pdf" target="preview" download>Max. Students Passed</a>
-                <a href="pdf/CLICK HERE .pptx" target="preview" download>Follow Me</a>
-            </div>
-        </div>
-    </div>
+
     <div id="popup" class="popup">
-        <div class="header">
-            <button class="close-btn" onclick="closePopup()">✖</button>
-            <a class="download-btn" id="downloadBtn" href="#" download>Download</a>
+        <div class="popup-header">
+            <button onclick="closePopup()" style="color:red; background:none; border:none; cursor:pointer;">✖ CLOSE</button>
+            <a id="downloadBtn" href="#" download style="color:var(--accent-color); text-decoration:none;">Download ⬇</a>
         </div>
         <iframe id="preview" src=""></iframe>
     </div>
+
     <script>
-        function toggleDropdown(element) {
-            var dropdownContent = element.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
+        // Toggle Accordion (Prevents Overlapping)
+        function toggleSubject(button) {
+            const card = button.parentElement;
+            
+            // Optional: Close other cards when one opens
+            document.querySelectorAll('.subject-card').forEach(c => {
+                if (c !== card) c.classList.remove('active');
+            });
+
+            card.classList.toggle('active');
         }
-        
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropdown-btn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.style.display === "block") {
-                        openDropdown.style.display = "none";
-                    }
+
+        // Handle PDF Preview
+        document.querySelectorAll('.subject-content a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.href.includes('.pdf')) {
+                    e.preventDefault();
+                    document.getElementById('preview').src = this.href;
+                    document.getElementById('downloadBtn').href = this.href;
+                    document.getElementById('popup').style.display = 'block';
                 }
-            }
-        }
-
-        function showPopup(url) {
-            var popup = document.getElementById('popup');
-            var preview = document.getElementById('preview');
-            var downloadBtn = document.getElementById('downloadBtn');
-
-            preview.src = url;
-            downloadBtn.href = url;
-            downloadBtn.setAttribute('download', url.split('/').pop());
-
-            popup.style.display = 'block';
-        }
-
-        function closePopup() {
-            var popup = document.getElementById('popup');
-            popup.style.display = 'none';
-        }
-
-        // Add event listeners to preview links
-        document.querySelectorAll('.dropdown-content a').forEach(link => {
-            link.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent default link behavior
-                showPopup(this.href); // Show popup
             });
         });
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('preview').src = "";
+        }
     </script>
 </body>
 </html>

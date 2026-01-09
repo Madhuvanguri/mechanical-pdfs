@@ -3,261 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select the Year</title>
+    <title>3rd Year Resources | Mechanical Hub</title>
     <style>
+        :root {
+            --primary-bg: #1a1d23;
+            --secondary-bg: #282c34;
+            --accent-color: #61dafb;
+            --text-main: #ffffff;
+            --text-dim: #abb2bf;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-            padding: 20px;
         }
+
         h1, h2 {
-            font-size: 2em;
+            font-size: 2rem;
             text-align: center;
-            color: gray;
-            margin: 20px 0;
-            font-weight: bold;
-            animation: fadeIn 2s ease-in;
+            color: var(--accent-color);
+            margin: 30px 0 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeIn 1.5s ease-in;
         }
+
         .container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
             width: 100%;
-            max-width: 600px;
-            margin: 20px 0;
+            max-width: 850px;
+            margin-bottom: 40px;
         }
-        .dropdown {
-            position: relative;
-            display: inline-block;
+
+        /* --- Accordion Item (The Fix for Overlapping) --- */
+        .subject-item {
+            background-color: var(--secondary-bg);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.2s;
         }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            min-width: 160px;
+
+        .subject-item:hover {
+            border-color: var(--accent-color);
         }
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
+
+        .subject-header {
+            width: 100%;
+            padding: 20px;
+            background: none;
+            border: none;
+            color: var(--text-main);
             text-align: left;
-        }
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-        .dropdown-button {
-            padding: 15px 30px;
-            text-decoration: none;
-            color: white;
-            background-color: #007BFF;
-            border-radius: 8px;
-            text-align: center;
-            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-            font-size: 1em;
-            animation: slideIn 1s ease-in;
+            font-size: 1.15rem;
+            font-weight: 600;
             cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .dropdown-button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-            box-shadow: 0px 4px 15px rgba(0, 123, 255, 0.4);
+
+        .subject-header::after {
+            content: '▼';
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            transition: 0.3s;
         }
-        @media (min-width: 600px) {
-            .container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            h1, h2 {
-                font-size: 2.5em;
-            }
-            .dropdown-button {
-                font-size: 1.25em;
-                padding: 20px 40px;
-            }
+
+        .subject-item.active .subject-header::after {
+            transform: rotate(180deg);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+
+        /* --- Subject Content (Links) --- */
+        .subject-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+            background: rgba(0, 0, 0, 0.2);
         }
-        @keyframes slideIn {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+
+        .subject-item.active .subject-content {
+            max-height: 1500px; /* High enough to show all PDFs */
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .subject-content a {
+            display: block;
+            padding: 14px 25px;
+            color: var(--text-dim);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+
+        .subject-content a:hover {
+            background-color: rgba(97, 218, 251, 0.1);
+            color: var(--accent-color);
+            padding-left: 35px;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        @media (max-width: 600px) {
+            h1, h2 { font-size: 1.6rem; }
+            .subject-header { font-size: 1rem; padding: 15px; }
         }
     </style>
 </head>
 <body>
-    <h1>5TH SEMESTER</h1>
+
+    <h1>5th Semester Resources</h1>
     <div class="container">
-        <div class="dropdown">
-            <div class="dropdown-button">Dynamics of Machinery</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem5/dm/DOM 2MARKES.pptx" download>DOM 2MARKES</a>
-                <a href="pdf/sem5/dm/Dom mid 2 part B answers.pdf" download>Dom mid 2 part B answers</a>
-                <a href="pdf/sem5/dm/DOM MID I AUTONOMOUS PAPER-20.docx" download>DOM MID I AUTONOMOUS PAPER-20</a>
-                <a href="pdf/sem5/dm/Dom nates.pdf" download>Dom nates</a>
-                <a href="pdf/sem5/dm/DOM NOTES.pdf" download>DOM NOTES</a>
-                <a href="pdf/sem5/dm/Dom.pdf" download>Dom</a>
-                <a href="pdf/sem5/dm/dynamics notes.pdf" download>dynamics notes</a>
-                <a href="pdf/sem5/dm/Gyroscope couple(2).pdf" download>Gyroscope couple(2)</a>
-                <a href="pdf/sem5/dm/Gyroscope couple.pdf" download>Gyroscope couple</a>
-                <a href="pdf/sem5/dm/Important dom model paper.docx.pdf" download>Important dom model paper</a>
-                <a href="pdf/sem5/dm/Important questions dom.pdf" download>Important questions dom</a>
-                <a href="pdf/sem5/dm/ME6505 Dynamics of Machines (DOM)WITH QB - BY Civildatascom1.pdf" download>ME6505 Dynamics of Machines</a>
-                <a href="pdf/sem5/dm/Sem Model paper DOM 2022.pdf" download>Sem Model paper DOM 2022</a>
+        
+        <div class="subject-item">
+            <button class="subject-header" onclick="toggleSubject(this)">Dynamics of Machinery</button>
+            <div class="subject-content">
+                <a href="pdf/sem5/dm/Dom nates.pdf" download>DOM Notes</a>
+                <a href="pdf/sem5/dm/Important dom model paper.docx.pdf" download>Model Paper</a>
+                <a href="pdf/sem5/dm/Gyroscope couple.pdf" download>Gyroscope Couple</a>
+                <a href="pdf/sem5/dm/Important questions dom.pdf" download>Important Questions</a>
                 <a href="pdf/CLICK HERE .pptx" download>FOLLOW ME</a>
             </div>
         </div>
-        <div class="dropdown">
-            <div class="dropdown-button">Design of Machine Members-I</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem5/dmm/DMM-1 Mid 1.pdf" download>DMM-1 Mid 1</a>
-                <a href="pdf/sem5/dmm/Dmm-1 text book.pdf" download>Dmm-1 text book</a>
-                <a href="pdf/sem5/dmm/Model question paper dmm-1.pdf" download>Model question paper dmm-1</a>
-                <a href="pdf/sem5/dmm/Sem dmm-1 imp questions.pdf" download>Sem dmm-1 imp questions</a>
+
+        <div class="subject-item">
+            <button class="subject-header" onclick="toggleSubject(this)">Design of Machine Members-I</button>
+            <div class="subject-content">
+                <a href="pdf/sem5/dmm/Dmm-1 text book.pdf" download>DMM-I Textbook</a>
+                <a href="pdf/sem5/dmm/Sem dmm-1 imp questions.pdf" download>Important Questions</a>
+                <a href="pdf/sem5/dmm/Model question paper dmm-1.pdf" download>Model Paper</a>
                 <a href="pdf/CLICK HERE .pptx" download>FOLLOW ME</a>
             </div>
         </div>
-        <div class="dropdown">
-            <div class="dropdown-button">Thermal Engineering-II</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem5/te/IMPORTANT QUESTIOS Te-2.docx" download>IMPORTANT QUESTIOS Te-2</a>
-                <a href="pdf/sem5/te/Te-2 digital notes.pdf" download>Te-2 digital notes</a>
-                <a href="pdf/sem5/te/Te-2 online pdf.pdf" download>Te-2 online pdf</a>
+
+        <div class="subject-item">
+            <button class="subject-header" onclick="toggleSubject(this)">Operations Research</button>
+            <div class="subject-content">
+                <a href="pdf/sem5/or/or mid imp questions.pdf" download>OR Imp Questions</a>
+                <a href="pdf/sem5/or/OR MINOR.pdf" download>OR Minor</a>
                 <a href="pdf/CLICK HERE .pptx" download>FOLLOW ME</a>
             </div>
         </div>
-        <div class="dropdown">
-            <div class="dropdown-button">Operations Research</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem5/or/Mid-1 or imp.jpg" download>Mid-1 or imp</a>
-                <a href="pdf/sem5/or/Mid-1 or important.jpg" download>Mid-1 or important</a>
-                <a href="pdf/sem5/or/Mid-1 or.jpg" download>Mid-1</a>
-                <a href="pdf/sem5/or/Or mid 2 important.pdf" download>Or mid 2 important</a>
-                <a href="pdf/sem5/or/or mid imp questions.pdf" download>or mid imp questions</a>
-                <a href="pdf/sem5/or/OR MINOR.pdf" download>OR MINOR</a>
-                <a href="pdf/CLICK HERE .pptx" download>FOLLOW ME</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <div class="dropdown-button">Instrumentation and Control Systems</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem5/ics/I.C.S.pdf" download>I.C.S</a>
-                <a href="pdf/sem5/ics/ICS full notes.pdf" download>ICS full notes</a>
-                <a href="pdf/sem5/ics/MID-1 IMPORTANT QUESTIONS.jpg" download>MID-1 IMPORTANT QUESTIONS</a>
-                <a href="pdf/CLICK HERE .pptx" download>FOLLOW ME</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <div class="dropdown-button">Automobile Engineering</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem5/ae/2-2 18MEC224 - Automobile Engineering Lecture Notes.pdf" download>AE Lecture Notes</a>
-                <a href="pdf/sem5/ae/Ae assignment.pdf" download>Ae assignment</a>
-                <a href="pdf/sem5/ae/AE digital notes.pdf" download>AE digital notes(INTERNET BASED)</a>
-                <a href="pdf/sem5/ae/AE engineering.pdf" download>AE engineering</a>
-                <a href="pdf/sem5/ae/AE IMPORTANT QUESTIONS.docx" download>AE IMPORTANT QUESTIONS</a>
-                <a href="pdf/sem5/ae/AE NOTE.pdf" download>AE NOTE</a>
-                <a href="pdf/sem5/ae/automobile Text book 📖.pdf" download>automobile Text book</a>
-                <a href="pdf/sem5/ae/Automobile-Engineering.pdf" download>Automobile-Engineering</a>
-                <a href="pdf/sem5/ae/ME6602 SD - By EasyEngineeringnet.pdf" download>ME6602 SD </a>
-                <a href="pdf/sem5/ae/Mid-1 AE important questions.jpg" download>Mid-1 AE</a>
-                <a href="pdf/CLICK HERE .pptx" download>FOLLOW ME</a>
-            </div>
-        </div>
+
     </div>
-    <h2>6TH SEMESTER</h2>
+
+    <h2>6th Semester Resources</h2>
     <div class="container">
-        <div class="dropdown">
-            <div class="dropdown-button">Design of Machine Members-II</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem6/dmm2/A Textbook of Machine Design by R.S.KHURMI AND J.K.GUPTA -tortuka-.pdf" download>Textbook of Machine Design</a>
-                <a href="pdf/sem6/dmm2/DESIGN DATA BOOK..pdf" download>DESIGN DATA BOOK</a>
-                <a href="pdf/sem6/dmm2/DMM-II IMPORTANT QUESTIONS.pdf" download>DMM-II IMPORTANT QUESTIONS</a>
-                <a href="pdf/sem6/dmm2/DMM-II REGULAR 2K23 MODEL QUESTION PAPER.pdf" download>MODEL QUESTION PAPER</a>
-                <a href="pdf/sem6/dmm2/DMM-II SOME 2MARKS.pdf" download>SOME 2MARKS</a>
+        
+        <div class="subject-item">
+            <button class="subject-header" onclick="toggleSubject(this)">Heat Transfer</button>
+            <div class="subject-content">
+                <a href="pdf/sem6/ht/Heat Transfer 215.pdf" download>Heat Transfer Notes</a>
+                <a href="pdf/sem6/ht/heatandmasstransferedatabook-180824143537.pdf" download>HMT Data Book</a>
+                <a href="pdf/sem6/ht/HT IMPORTANT QUESTIONS.docx" download>Important Questions</a>
                 <a href="pdf/CLICK HERE .pptx" download>FOLLOW ME</a>
             </div>
         </div>
-        <div class="dropdown">
-            <div class="dropdown-button">Heat Transfer</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem6/ht/1st unit HT.pdf" download>1st unit HT</a>
-                <a href="pdf/sem6/ht/2 marks HT.txt" download>2 marks HT</a>
-                <a href="pdf/sem6/ht/4th unit.pdf" download>4th unit</a>
-                <a href="pdf/sem6/ht/5th unit.pdf" download>5th unit</a>
-                <a href="pdf/sem6/ht/Heat Transfer 215.pdf" download>Heat Transfer 215</a>
-                <a href="pdf/sem6/ht/heatandmasstransferedatabook-180824143537.pdf" download>databook</a>
-                <a href="pdf/sem6/ht/HT IMPORTANT QUESTIONS.docx" download>HT IMPORTANT QUESTIONS</a>
-                <a href="pdf/sem6/ht/MINI HT IMPORTANT Questions. .txt" download>MINI HT IMP Questions</a>
+
+        <div class="subject-item">
+            <button class="subject-header" onclick="toggleSubject(this)">Disaster Management</button>
+            <div class="subject-content">
+                <a href="pdf/sem6/dm/DM CLASS NOTES.pdf" download>Class Notes</a>
+                <a href="pdf/sem6/dm/DM UNIT 1-5 ONLINE.pdf" download>Full Online Notes</a>
                 <a href="pdf/CLICK HERE .pptx" download>FOLLOW ME</a>
             </div>
         </div>
-        <div class="dropdown">
-            <div class="dropdown-button">Machine Tools and Metrology</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem6/mtm/3rd unit mtm.pdf" download>3rd unit mtm</a>
-                <a href="pdf/sem6/mtm/4th unit mtm.pdf" download>4th unit mtm</a>
-                <a href="pdf/sem6/mtm/grinding .pdf" download>grinding</a>
-                <a href="pdf/sem6/mtm/machine tools and metrology model question papers 2023.docx" download>model question papers 2023</a>
-                <a href="pdf/sem6/mtm/Metrology & Machine Tools Spectrum.pdf" download>MTM Spectrum</a>
-                <a href="pdf/sem6/mtm/MT Digital Notes.pdf" download>MT Digital Notes</a>
-                <a href="pdf/sem6/mtm/MTM 1.pdf" download>MTM 1(qnp)</a>
-                <a href="pdf/sem6/mtm/MTM 2.pdf" download>MTM 2(qnp)</a>
-                <a href="pdf/sem6/mtm/MTM important questions.pdf" download>MTM important questions</a>
-                <a href="pdf/sem6/mtm/MTM TB.pdf" download>MTM TB</a>
-                <a href="pdf/sem6/mtm/MTM Unit-1.pdf" download>MTM Unit-1</a>
-                <a href="pdf/sem6/mtm/MTM Unit-2.pdf" download>MTM Unit-2</a>
-                <a href="pdf/sem6/mtm/MTM.pdf" download>MTM(qnp)</a>
-                <a href="pdf/sem6/mtm/toaz.info-design-of-machine-tool-pr_5f8a2e44c007b452ce33d5621d6b96b7.pdf" download>info-design</a>
-                <a href="pdf/CLICK HERE .pptx" download>FOLLOW ME</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <div class="dropdown-button">Refrigeration and Air-Conditioning</div>
-            <div class="dropdown-content">
-                <a href="file1.pdf" download>File 1</a>
-                <a href="file2.pdf" download>File 2</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <div class="dropdown-button">Non-Traditional Machining Processes</div>
-            <div class="dropdown-content">
-                <a href="file1.pdf" download>File 1</a>
-                <a href="file2.pdf" download>File 2</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <div class="dropdown-button">Disaster Management</div>
-            <div class="dropdown-content">
-                <a href="pdf/sem6/dm/DM CLASS NOTES.pdf" download>DM CLASS NOTES</a>
-                <a href="pdf/sem6/dm/DM key Mech.pdf" download>DM key Mech</a>
-                <a href="pdf/sem6/dm/DM UNIT 1-5 ONLINE.pdf" download>DM UNIT 1-5 ONLINE</a>
-                <a href="pdf/sem6/dm/DM unit 3 .pdf" download>DM unit 3</a>
-                <a href="pdf/sem6/dm/DM UNIT-1.pdf" download>DM UNIT-1</a>
-                <a href="pdf/sem6/dm/DM UNIT-2.pdf" download>DM UNIT-2</a>
-                <a href="pdf/sem6/dm/DM UNIT-4.pdf" download>DM UNIT-4</a>
-                <a href="pdf/sem6/dm/DM UNIT-5.pdf" download>DM UNIT-5</a>
-                <a href="pdf/sem6/dm/DocScanner 18-Apr-2023 2-51 pm.pdf" download>DocScanner 18-Apr-2023</a>
-                <a href="pdf/sem6/dm/DocScanner 19-Apr-2023 11-22 am.pdf" download>DocScanner 19-Apr-2023</a>
-                <a href="pdf/CLICK HERE .pptx" download>FOLLOW ME</a>
-            </div>
-        </div>
+
     </div>
+
+    <script>
+        function toggleSubject(button) {
+            const currentItem = button.parentElement;
+            
+            // Close other subjects to keep the view clean
+            document.querySelectorAll('.subject-item').forEach(item => {
+                if (item !== currentItem) {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Toggle current subject
+            currentItem.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>

@@ -1,5 +1,4 @@
-/* Existing styles */
-
+/* --- Global Reset --- */
 * {
     margin: 0;
     padding: 0;
@@ -7,18 +6,21 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #1a1d23; /* Dark Background */
+    color: #ffffff;
+    line-height: 1.6;
 }
 
 a {
     text-decoration: none;
     color: inherit;
+    transition: 0.3s;
 }
 
+/* --- Header & Navigation --- */
 header {
-    background-color: #333;
+    background-color: #282c34;
     color: #fff;
     position: fixed;
     width: 100%;
@@ -27,37 +29,25 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 15px 5%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 header .logo {
     font-size: 24px;
     font-weight: bold;
-}
-
-nav {
-    display: flex;
-    align-items: center;
+    color: #61dafb; /* React Blue */
+    letter-spacing: 1px;
 }
 
 nav ul {
     list-style: none;
     display: flex;
-}
-
-nav ul li {
-    margin: 0 15px;
-}
-
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s;
+    gap: 25px;
 }
 
 nav ul li a:hover {
-    color: #007BFF;
+    color: #61dafb;
 }
 
 .menu-toggle {
@@ -69,169 +59,122 @@ nav ul li a:hover {
 .menu-toggle .bar {
     height: 3px;
     width: 25px;
-    background-color: #fff;
+    background-color: #61dafb;
     margin: 4px 0;
     border-radius: 2px;
 }
 
+/* --- Responsive Nav (Fixes Overlap) --- */
 @media (max-width: 768px) {
     nav ul {
         display: none;
         flex-direction: column;
         width: 100%;
-        background-color: #333;
+        background-color: #282c34;
         position: absolute;
         top: 100%;
         left: 0;
-        text-align: center;
+        padding: 20px 0;
+        border-bottom: 2px solid #61dafb;
     }
 
-    nav ul.active {
-        display: flex;
-    }
-
-    nav ul li {
-        margin: 10px 0;
-    }
-
-    .menu-toggle {
-        display: flex;
-    }
+    nav ul.active { display: flex; }
+    .menu-toggle { display: flex; }
 }
 
+/* --- Main Layout Grid --- */
 main {
-    display: flex;
-    flex-direction: column;
-    margin-top: 70px;
+    margin-top: 80px; /* Space for fixed header */
     padding: 20px;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: 1fr; /* Default Mobile: Single Column */
+    gap: 30px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+@media (min-width: 992px) {
+    main {
+        grid-template-columns: 300px 1fr; /* Desktop: Sidebar and Content side-by-side */
+    }
+}
+
+/* --- Sidebar --- */
 .sidebar {
-    width: 100%;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
+    background-color: #282c34;
+    padding: 25px;
+    border-radius: 12px;
+    height: fit-content;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 .sidebar .search-bar input {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    background: #1a1d23;
+    border: 1px solid #3e4451;
+    border-radius: 8px;
+    color: white;
 }
 
-.sidebar .quick-links h3 {
-    margin-top: 0;
-}
+.sidebar .quick-links ul { list-style: none; }
+.sidebar .quick-links ul li { margin-bottom: 12px; }
+.sidebar .quick-links ul li a { color: #abb2bf; font-size: 0.95rem; }
+.sidebar .quick-links ul li a:hover { color: #61dafb; padding-left: 5px; }
 
-.sidebar .quick-links ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar .quick-links ul li {
-    margin-bottom: 10px;
-}
-
-.sidebar .quick-links ul li a {
-    text-decoration: none;
-    color: #333;
-    transition: color 0.3s;
-}
-
-.sidebar .quick-links ul li a:hover {
-    color: #007BFF;
-}
-
+/* --- Resource Content Grid --- */
 .content {
-    width: 100%;
-    padding: 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
 
 .resource-section {
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 5px;
+    background-color: rgba(255,255,255,0.05);
+    padding: 25px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+.resource-section:hover {
+    border-color: #61dafb;
+    transform: translateY(-5px);
 }
 
 .download-btn {
     display: inline-block;
-    padding: 10px 15px;
-    background-color: #007BFF;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 10px;
-    transition: background-color 0.3s, transform 0.3s;
+    padding: 10px 20px;
+    background-color: #61dafb;
+    color: #1a1d23;
+    font-weight: bold;
+    border-radius: 6px;
+    margin-top: 15px;
 }
 
-.download-btn:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
-
+/* --- Footer --- */
 footer {
-    background-color: #333;
-    color: #fff;
+    background-color: #282c34;
+    padding: 40px 20px;
     text-align: center;
-    padding: 20px 0;
-    position: relative;
-    width: 100%;
+    border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.footer-content a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.footer-content a:hover {
-    color: #007BFF;
-}
-
-/* Pop-up styles */
+/* --- Popup Fix --- */
 .popup {
-    display: none; /* Hidden by default */
+    display: none;
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
+    width: 90%;
     max-width: 500px;
-    background-color: #b71010;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    z-index: 1001;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    background-color: #282c34;
+    border: 2px solid #61dafb;
+    border-radius: 15px;
+    z-index: 2000;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
-.popup-content {
-    padding: 20px;
-    text-align: center;
-    color: #fff;
-}
-
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.popup.show {
-    display: block;
-    opacity: 1;
-}
+.popup.show { display: block; }

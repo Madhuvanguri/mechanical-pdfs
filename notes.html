@@ -3,63 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select the Year</title>
+    <title>Select the Year | Mechanical Hub</title>
     <style>
+        :root {
+            --primary-bg: #1a1d23;
+            --secondary-bg: #282c34;
+            --accent-color: #61dafb;
+            --text-main: #ffffff;
+            --text-dim: #abb2bf;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+        }
+
+        header {
+            font-size: 2rem;
+            text-align: center;
+            color: var(--accent-color);
+            padding: 40px 20px 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        header, footer {
-            font-size: 2.5em;
-            text-align: center;
-            color: gray;
-           
             padding: 20px;
-            width: 100%;
-            font-weight: bold;
-            animation: fadeIn 2s ease-in;
         }
+
         .container {
             display: grid;
             grid-template-columns: repeat(1, 1fr);
-            gap: 20px;
-            width: 80%;
-            margin: 20px 0; /* Added margin to give space from header and footer */
+            gap: 25px;
+            width: 100%;
+            max-width: 800px;
         }
+
         .container a {
-            padding: 20px 40px;
+            padding: 40px 20px;
             text-decoration: none;
-            color: white;
-            background-color: #007BFF;
-            border-radius: 8px;
+            color: var(--text-main);
+            background-color: var(--secondary-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
             text-align: center;
-            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-            font-size: 1.25em;
-            animation: slideIn 1s ease-in;
+            font-size: 1.5em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            animation: slideIn 0.8s ease-out forwards;
+            opacity: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
+
+        /* Adding icons using CSS pseudo-elements */
+        .container a::before {
+            content: '⚙️';
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
         .container a:hover {
-            background-color: #0056b3;
-            transform: scale(1.1);
-            box-shadow: 0px 4px 15px rgba(0, 123, 255, 0.4);
+            background-color: rgba(97, 218, 251, 0.1);
+            border-color: var(--accent-color);
+            transform: translateY(-10px);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
+            color: var(--accent-color);
         }
+
+        footer {
+            font-size: 1.2rem;
+            text-align: center;
+            color: var(--text-dim);
+            padding: 30px;
+            letter-spacing: 2px;
+            opacity: 0.7;
+        }
+
+        /* Delaying animations for a staggered effect */
+        .container a:nth-child(1) { animation-delay: 0.2s; }
+        .container a:nth-child(2) { animation-delay: 0.4s; }
+        .container a:nth-child(3) { animation-delay: 0.6s; }
+        .container a:nth-child(4) { animation-delay: 0.8s; }
+
+        /* Tablet & Desktop Layout */
         @media (min-width: 600px) {
             .container {
                 grid-template-columns: repeat(2, 1fr);
             }
+            header { font-size: 2.5rem; }
         }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
         @keyframes slideIn {
             from {
-                transform: translateY(20px);
+                transform: translateY(30px);
                 opacity: 0;
             }
             to {
@@ -70,13 +124,19 @@
     </style>
 </head>
 <body>
-    <header>SELECT THE YEAR</header>
-    <div class="container">
-        <a href="oneyear.html">1ST YEAR</a>
-        <a href="twoyear.html">2ND YEAR</a>
-        <a href="threeyear.html">3RD YEAR</a>
-        <a href="fouryear.html">4TH YEAR</a>
+
+    <header>Select Academic Year</header>
+
+    <div class="main-content">
+        <div class="container">
+            <a href="oneyear.html"><span>1ST YEAR</span></a>
+            <a href="twoyear.html"><span>2ND YEAR</span></a>
+            <a href="threeyear.html"><span>3RD YEAR</span></a>
+            <a href="fouryear.html"><span>4TH YEAR</span></a>
+        </div>
     </div>
+
     <footer>HAPPY LEARNING</footer>
+
 </body>
 </html>
